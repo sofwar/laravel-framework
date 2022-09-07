@@ -33,11 +33,12 @@ class ScheduleWorkCommand extends Command
 
         [$lastExecutionStartedAt, $keyOfLastExecutionWithOutput, $executions] = [null, null, []];
 
+        $i = 0;
+        
         while (true) {
             usleep(100 * 1000);
 
-            if (Carbon::now()->second === 0 &&
-                ! Carbon::now()->startOfMinute()->equalTo($lastExecutionStartedAt)) {
+            if (Carbon::now()->second === 0) { //  && ! Carbon::now()->startOfMinute()->equalTo($lastExecutionStartedAt)
                 $executions[] = $execution = new Process([
                     PHP_BINARY,
                     defined('ARTISAN_BINARY') ? ARTISAN_BINARY : 'artisan',
